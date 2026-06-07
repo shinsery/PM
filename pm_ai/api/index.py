@@ -3,13 +3,13 @@ AI 상품페이지 기획자 — Vercel Web App
 화장품 전성분 → 고객 언어 설명 + 판매 포인트 + 경쟁사 분석 + 비주얼 기획
 """
 from flask import Flask, request
-import anthropic
+import google.generativeai as genai
 import os
 import json
 from datetime import datetime
 
 app = Flask(__name__)
-MODEL = "claude-opus-4-8"
+MODEL = "gemini-2.0-flash"
 
 SYSTEM_PROMPT = """당신은 15년 경력의 전문 화장품 상품 기획자 AI입니다.
 
@@ -119,23 +119,19 @@ def get_analysis_prompt(ingredients, product_info, competitor_info):
 
 
 def analyze_product(ingredients, product_info, competitor_info):
-    client = anthropic.Anthropic()
-    full_response = ""
-
-    with client.messages.stream(
-        model=MODEL,
-        max_tokens=4096,
-        thinking={"type": "adaptive"},
-        system=SYSTEM_PROMPT,
-        messages=[
-            {
-                "role": "user",
-                "content": get_analysis_prompt(ingredients, product_info, competitor_info),
-            }
-        ],
-    ) as stream:
-        for text in stream.text_stream:
-            full_response += text
+    genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+    model = genai.GenerativeModel(
+        model_name=MODEL,
+        system_instruction=SYSTEM_PROMPT,
+    )
+    response = model.generate_content(
+        get_analysis_prompt(ingredients, product_info, competitor_info),
+        generation_config=genai.GenerationConfig(
+            temperature=0.7,
+            max_output_tokens=4096,
+        ),
+    )
+    full_response = response.text
 
     json_str = full_response.strip()
     if "```json" in json_str:
@@ -656,7 +652,7 @@ HOME_HTML = """<!DOCTYPE html>
   </form>
 </div>
 
-<div class="footer-note">Powered by Claude claude-opus-4-8 &nbsp;·&nbsp; 분석에 30~60초 소요됩니다</div>
+<div class="footer-note">Powered by Gemini 2.0 Flash (무료) &nbsp;·&nbsp; 분석에 10~30초 소요됩니다</div>
 
 <!-- 로딩 오버레이 -->
 <div id="loading">
