@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 상품페이지 기획안 — 해양 미네랄 세라마이드 수분 세럼</title>
+<style>
+  :root {
+    --primary: #2A6B8A;
+    --secondary: #3D9CB5;
+    --accent: #A8E4F0;
+    --bg: #F0FAFD;
+    --text: #1A3A4A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: #e8ecef;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .page { max-width: 960px; margin: 0 auto; background: white; }
+
+  /* ── 배너 ── */
+  .banner {
+    background: linear-gradient(135deg, #1a4a62 0%, #2A6B8A 45%, #3D9CB5 75%, #A8E4F0 100%);
+    padding: 60px 48px 50px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .banner::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -30px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .banner-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 11px;
+    margin-bottom: 22px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .banner h1 {
+    font-size: 44px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+  }
+  .banner .sub {
+    font-size: 17px;
+    opacity: 0.88;
+    margin-bottom: 30px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .banner-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .banner-tag {
+    background: rgba(255,255,255,0.18);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .banner-meta {
+    font-size: 11px;
+    opacity: 0.6;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 16px;
+  }
+
+  /* ── 섹션 ── */
+  .section { padding: 40px 48px; border-bottom: 1px solid #eef2f5; }
+  .section:last-child { border-bottom: none; }
+  .section-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent);
+  }
+
+  /* ── 고객 카피 ── */
+  .copy-headline {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .copy-sub {
+    font-size: 17px;
+    color: #4a7a94;
+    margin-bottom: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .copy-description {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #3a4a54;
+    background: var(--bg);
+    padding: 22px 26px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #d4eef8;
+  }
+  .copy-tip {
+    font-size: 13px;
+    color: var(--secondary);
+    padding: 12px 18px;
+    border-left: 3px solid var(--accent);
+    background: #f8fdff;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* ── 성분 카드 ── */
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .ingredient-card {
+    background: white;
+    border: 1px solid #d4eef8;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .ingredient-card:hover { box-shadow: 0 4px 14px rgba(42,107,138,0.12); transform: translateY(-2px); }
+  .ing-name { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+  .ing-rating { font-size: 13px; color: #f4a261; margin-bottom: 7px; letter-spacing: 1px; }
+  .ing-benefit { font-size: 12px; color: #555; line-height: 1.55; }
+  .efficacy-summary {
+    background: linear-gradient(to right, var(--bg), white);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: #3a4a54;
+    line-height: 1.8;
+    border: 1px solid #d4eef8;
+  }
+
+  /* ── 판매 포인트 ── */
+  .sp-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #d4eef8;
+    padding: 26px 28px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  }
+  .sp-number {
+    font-size: 10px;
+    font-weight: 800;
+    color: white;
+    background: var(--primary);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    letter-spacing: 0;
+  }
+  .sp-content {
+    display: grid;
+    grid-template-columns: 1fr 36px 1fr;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .sp-pain {
+    background: #fdf5f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid #fde8d8;
+  }
+  .sp-solution {
+    background: #f0fafd;
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid #d4eef8;
+  }
+  .sp-arrow { color: var(--primary); font-size: 22px; text-align: center; opacity: 0.6; }
+  .label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .label-pain { color: #c97a3a; }
+  .label-sol { color: var(--secondary); }
+  .sp-pain p, .sp-solution p { font-size: 13px; color: #444; line-height: 1.6; }
+  .sp-message {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: center;
+    padding: 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+  .sp-evidence {
+    font-size: 11px;
+    color: #888;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ── 경쟁사 ── */
+  .usp-box {
+    background: linear-gradient(135deg, #1a4a62, #2A6B8A);
+    color: white;
+    border-radius: 14px;
+    padding: 22px 30px;
+    margin-bottom: 26px;
+    text-align: center;
+  }
+  .usp-label {
+    font-size: 10px;
+    opacity: 0.75;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .usp-text { font-size: 16px; font-weight: 700; line-height: 1.5; }
+  .market-pos {
+    font-size: 14px;
+    color: #3a4a54;
+    line-height: 1.7;
+    margin-bottom: 22px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .advantage-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid #d4eef8;
+  }
+  .adv-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .adv-desc { font-size: 12px; color: #555; line-height: 1.55; }
+  .comp-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
+  .comp-table th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .comp-table td { padding: 11px 18px; font-size: 13px; border-bottom: 1px solid #eef2f5; }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .feature-cell { font-weight: 600; color: #555; width: 25%; }
+  .our-cell { color: var(--primary); font-weight: 500; }
+  .comp-cell { color: #888; }
+  .comp-table tr:hover td { background: #f8fdff; }
+
+  /* ── 비주얼 콘셉트 ── */
+  .palette-row { display: flex; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
+  .swatch { text-align: center; width: 80px; }
+  .swatch-color {
+    width: 80px; height: 64px;
+    border-radius: 10px;
+    margin-bottom: 7px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .swatch-label { font-size: 11px; color: #555; font-weight: 600; }
+  .swatch-hex { font-size: 10px; color: #999; }
+  .mood-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .mood-tag {
+    background: var(--accent);
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .concept-text {
+    font-size: 14px;
+    color: #3a4a54;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    padding: 18px 22px;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid #d4eef8;
+  }
+  .prompt-label { font-size: 11px; color: #888; margin-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .prompt-box {
+    background: #0d1117;
+    color: #79c0ff;
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    padding: 18px 22px;
+    border-radius: 10px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── 트렌드 ── */
+  .why-box {
+    background: linear-gradient(to right, var(--bg), white);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: #3a4a54;
+    line-height: 1.8;
+    border: 1px solid #d4eef8;
+    margin-bottom: 20px;
+  }
+  .trend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .trend-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 18px 22px;
+    border: 1px solid #d4eef8;
+  }
+  .trend-card.full { grid-column: span 2; }
+  .tc-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .trend-card p { font-size: 13px; color: #444; line-height: 1.65; }
+
+  /* ── 원본 전성분 ── */
+  .ing-raw {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: #666;
+    line-height: 2.0;
+    font-family: 'Monaco', 'Consolas', monospace;
+    border: 1px solid #e4e8ec;
+    word-break: keep-all;
+  }
+
+  /* ── 배너 비주얼 모크업 ── */
+  .banner-mockup {
+    background: linear-gradient(135deg, #0d3348 0%, #1a5272 40%, #2A6B8A 70%, #3D9CB5 100%);
+    border-radius: 16px;
+    padding: 48px 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    min-height: 220px;
+  }
+  .banner-mockup::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(168,228,240,0.15);
+  }
+  .banner-mockup::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 100px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(168,228,240,0.1);
+  }
+  .mockup-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.65;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .mockup-h1 { font-size: 36px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; }
+  .mockup-sub { font-size: 14px; opacity: 0.8; margin-bottom: 24px; line-height: 1.5; }
+  .mockup-points { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mockup-point {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  .section-note {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  /* ── 푸터 ── */
+  .footer {
+    background: var(--primary);
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ 메인 배너 ═══ -->
+  <div class="banner">
+    <div class="banner-badge">AI 상품페이지 기획안</div>
+    <h1>바다가 채우는<br>속 수분</h1>
+    <div class="sub">손상된 피부 장벽을 세라마이드와 해양 미네랄로 촘촘하게</div>
+    <div class="banner-tags">
+      <span class="banner-tag">해양 미네랄 세라마이드 수분 세럼</span>
+      <span class="banner-tag">4만원대 · 미드 프리미엄</span>
+      <span class="banner-tag">타겟: 건성·민감성·장벽 손상 피부</span>
+      <span class="banner-tag">기능성: 주름 개선 (아데노신)</span>
+    </div>
+    <div class="banner-meta">생성일: 2026년 06월 07일 &nbsp;|&nbsp; 모델: claude-opus-4-8 &nbsp;|&nbsp; AI 상품페이지 기획자</div>
+  </div>
+
+
+  <!-- ═══ 고객 언어 카피 ═══ -->
+  <div class="section">
+    <div class="section-title">고객 언어 카피</div>
+    <div class="copy-headline">바다가 채우는 속 수분</div>
+    <div class="copy-sub">손상된 피부 장벽을 세라마이드와 해양 미네랄로 촘촘하게</div>
+    <div class="copy-description">
+      거칠어진 피부가 바다를 만나면 달라집니다. 해수와 씨솔트의 천연 미네랄이 피부 속 전해질을 채우고, 세라마이드가 무너진 장벽을 촘촘히 메워줍니다. 소듐하이알루로네이트와 베타-글루칸이 수분을 겹겹이 붙잡아, 하루 종일 촉촉함이 지속됩니다. 황금·쇠비름·편백 등 7가지 진정 식물 성분이 예민함을 달래는 동안, 아데노신이 잔주름까지 개선해줍니다.
+    </div>
+    <div class="copy-tip">💡 세안 후 가장 첫 단계에 사용하세요. 흔들어 섞은 뒤 손바닥에 덜어 얼굴 전체에 부드럽게 눌러 흡수시키면 즉각적인 수분감을 느낄 수 있습니다.</div>
+  </div>
+
+
+  <!-- ═══ 성분 분석 ═══ -->
+  <div class="section">
+    <div class="section-title">성분 분석</div>
+    <div class="ingredients-grid">
+      <div class="ingredient-card">
+        <div class="ing-name">해수 + 씨솔트</div>
+        <div class="ing-rating">★★★★★</div>
+        <div class="ing-benefit">바다 미네랄이 피부 속 전해질 균형을 맞춰 속건조를 근본부터 채워줍니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">세라마이드 NP</div>
+        <div class="ing-rating">★★★★★</div>
+        <div class="ing-benefit">피부 자연 지질과 동일한 구조로 장벽 빈 곳을 채워 수분 증발을 막아줍니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">소듐하이알루로네이트</div>
+        <div class="ing-rating">★★★★☆</div>
+        <div class="ing-benefit">저분자 히알루론산이 피부 깊숙이 침투하여 24시간 수분을 붙잡아 둡니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">베타-글루칸</div>
+        <div class="ing-rating">★★★★☆</div>
+        <div class="ing-benefit">피부 표면에 보습막을 형성해 촉촉함이 오래 유지되고 면역 기능을 도와줍니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">아데노신</div>
+        <div class="ing-rating">★★★★☆</div>
+        <div class="ing-benefit">식약처 인정 주름 개선 기능성 원료 — 세포 재생을 촉진해 잔주름을 서서히 채워줍니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">락토바실러스/콩발효</div>
+        <div class="ing-rating">★★★★☆</div>
+        <div class="ing-benefit">발효 성분이 피부 마이크로바이옴을 균형 있게 유지해 예민함을 줄여줍니다</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ing-name">황금 + 쇠비름추출물</div>
+        <div class="ing-rating">★★★☆☆</div>
+        <div class="ing-benefit">강력한 항산화·항염 성분이 붉어짐과 열감을 즉각적으로 진정시켜 줍니다</div>
+      </div>
+    </div>
+    <div class="efficacy-summary">
+      바다에서 건져 올린 미네랄 수분으로 손상된 피부 장벽을 채우고, 세라마이드+히알루론산+베타-글루칸의 트리플 수분 레이어가 속건조를 해소합니다. 황금·쇠비름·편백·오레가노·흰버드나무·육계나무·락토바실러스 7가지 진정 복합체가 예민한 피부를 달래며, 아데노신이 탄력까지 챙겨줍니다.
+    </div>
+  </div>
+
+
+  <!-- ═══ 판매 포인트 3개 ═══ -->
+  <div class="section">
+    <div class="section-title">판매 포인트 3</div>
+
+    <div class="sp-card">
+      <div class="sp-number">1</div>
+      <div class="sp-content">
+        <div class="sp-pain">
+          <span class="label label-pain">페인포인트</span>
+          <p>세안 후 당기고 뻣뻣한 느낌, 어떤 수분 크림을 써도 속건조가 해결되지 않아요</p>
+        </div>
+        <div class="sp-arrow">→</div>
+        <div class="sp-solution">
+          <span class="label label-sol">솔루션</span>
+          <p>세라마이드 NP + 하이드로제네이티드레시틴이 피부 장벽의 빈 곳을 직접 채워줍니다. 외부에서 수분을 더하는 게 아닌, 수분이 빠져나가는 구멍을 막는 방식입니다</p>
+        </div>
+      </div>
+      <div class="sp-message">"세라마이드가 장벽을 채운다, 이제 속건조 그만"</div>
+      <div class="sp-evidence">근거: 세라마이드 NP — 피부 자연 지질 구조와 동일한 성분으로 세포간 지질 직접 보충</div>
+    </div>
+
+    <div class="sp-card">
+      <div class="sp-number">2</div>
+      <div class="sp-content">
+        <div class="sp-pain">
+          <span class="label label-pain">페인포인트</span>
+          <p>예민해진 피부, 새 제품 바를 때마다 따갑고 붉어져서 뭘 써야 할지 모르겠어요</p>
+        </div>
+        <div class="sp-arrow">→</div>
+        <div class="sp-solution">
+          <span class="label label-sol">솔루션</span>
+          <p>황금·쇠비름·알란토인·판테놀·편백잎 5가지 진정 성분이 자극을 즉각 완화합니다. 락토바실러스 발효가 피부 마이크로바이옴을 정상화해 장기적인 예민함도 줄여줍니다</p>
+        </div>
+      </div>
+      <div class="sp-message">"예민한 피부도 처음 쓰는 날부터 편안하게"</div>
+      <div class="sp-evidence">근거: 황금추출물 (Scutellaria) + 쇠비름추출물 + 알란토인 — EWG 그린 등급 진정 성분 복합</div>
+    </div>
+
+    <div class="sp-card">
+      <div class="sp-number">3</div>
+      <div class="sp-content">
+        <div class="sp-pain">
+          <span class="label label-pain">페인포인트</span>
+          <p>피부가 처지고 잔주름이 생겨 촉촉한 것만으론 부족한데, 영양 단계가 너무 많아 귀찮아요</p>
+        </div>
+        <div class="sp-arrow">→</div>
+        <div class="sp-solution">
+          <span class="label label-sol">솔루션</span>
+          <p>아데노신(주름 개선 기능성 원료)이 수분 관리와 동시에 탄력을 잡아줍니다. 베타-글루칸의 필름 형성과 함께 피부 탄력과 결이 함께 개선됩니다</p>
+        </div>
+      </div>
+      <div class="sp-message">"수분 + 탄력, 한 병에 다 담았다"</div>
+      <div class="sp-evidence">근거: 아데노신 — 식약처 인정 주름 개선 기능성 원료 + 베타-글루칸 탄력 시너지</div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 경쟁사 차이점 ═══ -->
+  <div class="section">
+    <div class="section-title">경쟁사 차이점</div>
+
+    <div class="usp-box">
+      <div class="usp-label">핵심 USP</div>
+      <div class="usp-text">해양 미네랄이 피부 속 전해질을 채우는 동시에 세라마이드가 장벽을 복구하는,<br>4만원대 최강 이중 장벽 재건 수분 세럼</div>
+    </div>
+
+    <div class="market-pos">
+      4만원대 프리미엄 수분 세럼 시장에서 '해양 미네랄 + 세라마이드 + 발효' 트리플 조합으로 차별화합니다. 동가격대 경쟁사(일리윤 세라마이드 아토 세럼, COSRX 어드밴스드 세럼 등)가 단일 기능성에 집중하는 반면, 이 제품은 <strong>장벽 재건 + 즉각 진정 + 주름 개선 기능성</strong>을 4만원대에 한 병에 담은 가성비 프리미엄 포지션입니다.
+    </div>
+
+    <div class="advantages-grid">
+      <div class="advantage-item">
+        <div class="adv-title">해수 기반 미네랄 수분</div>
+        <div class="adv-desc">일반 정제수 기반 경쟁사 대비 바다 미네랄(전해질)이 피부 속 수분 균형을 더 근본적으로 채워줍니다</div>
+      </div>
+      <div class="advantage-item">
+        <div class="adv-title">세라마이드 + 발효 이중 장벽</div>
+        <div class="adv-desc">세라마이드로 물리적 장벽 복구 + 락토바실러스로 미생물학적 균형 — 경쟁사 대비 이중 장벽 케어</div>
+      </div>
+      <div class="advantage-item">
+        <div class="adv-title">7가지 식물 진정 복합체</div>
+        <div class="adv-desc">황금·쇠비름·편백·오레가노·흰버드나무·육계나무·알란토인 — 단일 진정 성분 경쟁사 대비 시너지 효과</div>
+      </div>
+      <div class="advantage-item">
+        <div class="adv-title">주름 개선 기능성 동시 충족</div>
+        <div class="adv-desc">아데노신 함유로 보습 + 기능성 화장품 인증(주름 개선)을 한 제품에서 해결해 단계 축소 가능</div>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>우리 상품 (4만원대)</th>
+          <th>일리윤 세라마이드 세럼 (3–4만원대)</th>
+          <th>COSRX 어드밴스드 세럼 (2–3만원대)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="feature-cell">수분 기반</td>
+          <td class="our-cell">해수 + 씨솔트 미네랄</td>
+          <td class="comp-cell">정제수</td>
+          <td class="comp-cell">정제수</td>
+        </tr>
+        <tr>
+          <td class="feature-cell">장벽 케어</td>
+          <td class="our-cell">세라마이드 NP + 레시틴 (이중)</td>
+          <td class="comp-cell">세라마이드 복합 (강점)</td>
+          <td class="comp-cell">센텔라 중심 (장벽 약함)</td>
+        </tr>
+        <tr>
+          <td class="feature-cell">진정 성분</td>
+          <td class="our-cell">7가지 복합 식물 진정</td>
+          <td class="comp-cell">2–3가지</td>
+          <td class="comp-cell">센텔라 단일</td>
+        </tr>
+        <tr>
+          <td class="feature-cell">기능성 인증</td>
+          <td class="our-cell">주름 개선 (아데노신)</td>
+          <td class="comp-cell">미표기 다수</td>
+          <td class="comp-cell">미표기</td>
+        </tr>
+        <tr>
+          <td class="feature-cell">발효/마이크로바이옴</td>
+          <td class="our-cell">락토바실러스/콩 발효 함유</td>
+          <td class="comp-cell">미함유</td>
+          <td class="comp-cell">미함유</td>
+        </tr>
+        <tr>
+          <td class="feature-cell">해양 성분</td>
+          <td class="our-cell">해수 + 씨솔트 (메인 기조)</td>
+          <td class="comp-cell">미함유</td>
+          <td class="comp-cell">미함유</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ═══ 비주얼 콘셉트 + 배너 모크업 ═══ -->
+  <div class="section">
+    <div class="section-title">비주얼 콘셉트</div>
+
+    <div class="section-note">아래는 권장 색상 팔레트를 적용한 배너 레이아웃 시뮬레이션입니다</div>
+
+    <div class="banner-mockup">
+      <div class="mockup-label">Marine Mineral Ceramide Essence</div>
+      <div class="mockup-h1">바다가 채우는 속 수분</div>
+      <div class="mockup-sub">손상된 피부 장벽을 세라마이드와 해양 미네랄로 촘촘하게</div>
+      <div class="mockup-points">
+        <span class="mockup-point">세라마이드 장벽 케어</span>
+        <span class="mockup-point">7가지 진정 복합</span>
+        <span class="mockup-point">주름 개선 기능성</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px;font-size:11px;color:#888;font-weight:700;letter-spacing:1px;text-transform:uppercase;">색상 팔레트</div>
+    <div class="palette-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2A6B8A"></div>
+        <div class="swatch-label">메인</div>
+        <div class="swatch-hex">#2A6B8A</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3D9CB5"></div>
+        <div class="swatch-label">서브</div>
+        <div class="swatch-hex">#3D9CB5</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#A8E4F0"></div>
+        <div class="swatch-label">포인트</div>
+        <div class="swatch-hex">#A8E4F0</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0FAFD"></div>
+        <div class="swatch-label">배경</div>
+        <div class="swatch-hex">#F0FAFD</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1A3A4A"></div>
+        <div class="swatch-label">텍스트</div>
+        <div class="swatch-hex">#1A3A4A</div>
+      </div>
+    </div>
+
+    <div class="mood-tags">
+      <span class="mood-tag">해양</span>
+      <span class="mood-tag">클린뷰티</span>
+      <span class="mood-tag">미네랄</span>
+      <span class="mood-tag">진정</span>
+      <span class="mood-tag">장벽케어</span>
+    </div>
+
+    <div class="concept-text">
+      <strong>이미지 방향:</strong> 투명한 바다물이 흐르는 배경, 제품 용기 위로 해수 물방울이 맺히는 장면. 소금 결정체와 식물 잎사귀(편백, 황금 꽃)를 자연스럽게 배치. 자연광 느낌의 밝고 투명한 조명으로 청량한 미네랄 이미지 강조.
+    </div>
+
+    <div class="prompt-label">Midjourney / DALL-E 이미지 프롬프트</div>
+    <div class="prompt-box">A luxurious Korean skincare essence bottle submerged in crystal clear sea water, marine minerals and sea salt crystals floating around, soft caustic light patterns, transparent water droplets on the bottle surface, cypress leaves and golden baical skullcap flowers as natural props, clean minimalist composition, light blue and teal color palette, editorial beauty photography, shot on Phase One camera, 8k resolution, soft natural daylight, white and aqua tones, shallow depth of field --ar 4:5 --style raw --q 2</div>
+  </div>
+
+
+  <!-- ═══ 트렌드 분석 ═══ -->
+  <div class="section">
+    <div class="section-title">트렌드 분석</div>
+
+    <div class="why-box">
+      2024–2025년 K-뷰티 최대 트렌드는 <strong>'피부 장벽 케어'와 '클린 마린 뷰티'의 교차점</strong>입니다. MZ세대를 중심으로 화해·글로우픽 등 성분 분석 앱 사용이 증가하며 '세라마이드', '발효', '해양 성분'에 대한 관심이 급증했습니다. 마스크 착용 이후 민감해진 피부와 미세먼지 문제로 장벽 케어 제품 수요가 급성장하고 있으며, 특히 해양 성분에 대한 신뢰도와 선호가 빠르게 높아지고 있습니다.
+    </div>
+
+    <div class="trend-grid">
+      <div class="trend-card">
+        <span class="tc-label">타겟 소비자</span>
+        <p>25–40대 여성, 피부 민감도 증가로 고민 중인 직장인. 성분 분석 앱(화해, 글로우픽)으로 구매를 결정하며, 효능 기반 K-뷰티에 신뢰를 갖고 있음. 자연 유래 성분 선호 및 클린뷰티 지향</p>
+      </div>
+      <div class="trend-card">
+        <span class="tc-label">구매 트리거</span>
+        <p>세안 후 당김·건조함이 심해질 때, 계절 변환기 민감해진 피부, 새 화장품으로 트러블 경험 후 '순한데 효과 있는' 제품을 찾을 때. SNS에서 '#세라마이드 #장벽케어' 태그를 발견하는 순간</p>
+      </div>
+      <div class="trend-card full">
+        <span class="tc-label">시장 타이밍</span>
+        <p>글로벌 마린 뷰티 시장이 연 8% 성장 중이며, 4만원대 해양 미네랄 세라마이드 세럼은 경쟁이 적은 블루오션 포지션입니다. 3만원 초반 클린 보습 세럼과 6만원대 이상 럭셔리 세럼 사이의 <strong>'가성비 프리미엄'</strong> 공백을 정확히 겨냥하며, 세라마이드+마린+발효 복합 조합은 동가격대에서 유일합니다.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 원본 전성분 ═══ -->
+  <div class="section">
+    <div class="section-title">입력 전성분</div>
+    <div class="ing-raw">해수, 피이지-6카프릴릭/카프릭글리세라이즈, 폴리글리세릴-3다이아이소스테아레이트, 사이클로펜타실록세인, 사이클로핵사실록세인, 1,2-핵산다이올, 씨솔트, 소듐하이알루로네이트, 세라마이드엔피, 하이드로제네이티드레시틴, 판테놀, 알란토인, 베타-글루칸, 글리세린, 폴리글리세릴-10아이소스테아레이트, 카프릴릭/카프릭트라이글리세라이드, 정제수, 아데노신, 흰버드나무껍질추출물, 오레가노잎추출물, 편백잎추출물, 락토바실러스/콩발효추출물, 육계나무껍질추출물, 황금추출물, 쇠비름추출물</div>
+    <div style="margin-top:12px;font-size:12px;color:#999;">상품 정보: 수분 세럼 · 4만원대</div>
+  </div>
+
+
+  <div class="footer">
+    AI 상품페이지 기획자 &nbsp;|&nbsp; Generated 2026-06-07 &nbsp;|&nbsp; claude-opus-4-8
+  </div>
+
+</div>
+</body>
+</html>
