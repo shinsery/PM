@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+
+# Environment — API 키 보호
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
