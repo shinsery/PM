@@ -3,13 +3,13 @@ AI 상품페이지 기획자 — Vercel Web App
 화장품 전성분 → 고객 언어 설명 + 판매 포인트 + 경쟁사 분석 + 비주얼 기획
 """
 from flask import Flask, request
-import google.generativeai as genai
+from groq import Groq
 import os
 import json
 from datetime import datetime
 
 app = Flask(__name__)
-MODEL = "gemini-2.0-flash"
+MODEL = "llama-3.3-70b-versatile"
 
 SYSTEM_PROMPT = """당신은 15년 경력의 전문 화장품 상품 기획자 AI입니다.
 
@@ -119,19 +119,17 @@ def get_analysis_prompt(ingredients, product_info, competitor_info):
 
 
 def analyze_product(ingredients, product_info, competitor_info):
-    genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-    model = genai.GenerativeModel(
-        model_name=MODEL,
-        system_instruction=SYSTEM_PROMPT,
+    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": get_analysis_prompt(ingredients, product_info, competitor_info)},
+        ],
+        max_tokens=4096,
+        temperature=0.7,
     )
-    response = model.generate_content(
-        get_analysis_prompt(ingredients, product_info, competitor_info),
-        generation_config=genai.GenerationConfig(
-            temperature=0.7,
-            max_output_tokens=4096,
-        ),
-    )
-    full_response = response.text
+    full_response = response.choices[0].message.content
 
     json_str = full_response.strip()
     if "```json" in json_str:
@@ -652,7 +650,7 @@ HOME_HTML = """<!DOCTYPE html>
   </form>
 </div>
 
-<div class="footer-note">Powered by Gemini 2.0 Flash (무료) &nbsp;·&nbsp; 분석에 10~30초 소요됩니다</div>
+<div class="footer-note">Powered by Llama 3.3 70B via Groq (무료) &nbsp;·&nbsp; 분석에 10~20초 소요됩니다</div>
 
 <!-- 로딩 오버레이 -->
 <div id="loading">
